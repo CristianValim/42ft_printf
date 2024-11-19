@@ -6,39 +6,39 @@
 /*   By: cvalim-d <cvalim-d@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 10:26:49 by cvalim-d          #+#    #+#             */
-/*   Updated: 2024/11/19 14:14:17 by cvalim-d         ###   ########.fr       */
+/*   Updated: 2024/11/19 14:32:49 by cvalim-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	parse_arguments(const char *type, va_list args);
+int	parse_arguments(const char *format_string, va_list args);
 int	print_arguments(long n, long base, int uppercase, int is_pointer);
 int	ft_putstr(char *s);
 
 /* Processes a format string and a variable number of
 arguments, printing the formatted output to the standard output.
-(const char *type)	> The format string.
-return (count)		> The total number of characters written. */
-int	ft_printf(const char *type, ...)
+(const char *format_string)	> The format string.
+return (count)				> The total number of characters written. */
+int	ft_printf(const char *format_string, ...)
 {
 	va_list	args;
 	int		count;
 
-	va_start(args, type);
+	va_start(args, format_string);
 	count = 0;
-	while (*type)
+	while (*format_string)
 	{
-		if (*type == '%')
+		if (*format_string == '%')
 		{
-			type++;
-			count += parse_arguments(type, args);
+			format_string++;
+			count += parse_arguments(format_string, args);
 		}
 		else
 		{
-			count += write(1, type, 1);
+			count += write(1, format_string, 1);
 		}
-		type++;
+		format_string++;
 	}
 	va_end(args);
 	return (count);
